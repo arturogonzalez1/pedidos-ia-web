@@ -1,0 +1,97 @@
+.wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px 0 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  transition: filter var(--transition), box-shadow var(--transition);
+}
+
+.trigger:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.trigger:not(:disabled):hover {
+  filter: brightness(0.97);
+}
+
+.recibido {
+  color: var(--status-recibido);
+  background: var(--status-recibido-bg);
+}
+
+.preparando {
+  color: var(--status-preparando);
+  background: var(--status-preparando-bg);
+}
+
+.enviado {
+  color: var(--status-enviado);
+  background: var(--status-enviado-bg);
+}
+
+.entregado {
+  color: var(--status-entregado);
+  background: var(--status-entregado-bg);
+}
+
+.menu {
+  position: fixed;
+  min-width: 220px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 6px;
+  z-index: 50;
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+}
+
+.option:hover,
+.optionActive {
+  background: var(--color-surface-2);
+}
+
+.optionLabel {
+  font-weight: 700;
+  display: block;
+}
+
+.optionHint {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.dotRecibido { background: var(--status-recibido); }
+.dotPreparando { background: var(--status-preparando); }
+.dotEnviado { background: var(--status-enviado); }
+.dotEntregado { background: var(--status-entregado); }

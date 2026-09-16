@@ -1,0 +1,99 @@
+/* Paleta personalizable.
+   Cambia --color-primary (y opcionalmente los neutros) para retematizar toda la app.
+   El panel de apariencia también escribe estas variables en :root. */
+
+:root,
+[data-mode='light'] {
+  --color-primary: #c45c26;
+  --color-primary-hover: color-mix(in srgb, var(--color-primary) 82%, #000);
+  --color-primary-active: color-mix(in srgb, var(--color-primary) 70%, #000);
+  --color-primary-soft: color-mix(in srgb, var(--color-primary) 14%, var(--color-surface));
+  --color-primary-ring: color-mix(in srgb, var(--color-primary) 35%, transparent);
+  --color-primary-fg: #fff;
+
+  --color-bg: #f3efe9;
+  --color-surface: #fffcf8;
+  --color-surface-2: #f7f3ee;
+  --color-sidebar: #1c1917;
+  --color-sidebar-text: #e7e5e4;
+  --color-sidebar-muted: #a8a29e;
+  --color-sidebar-hover: color-mix(in srgb, #fff 8%, transparent);
+  --color-sidebar-active: color-mix(in srgb, var(--color-primary) 22%, transparent);
+
+  --color-text: #1c1917;
+  --color-text-secondary: #57534e;
+  --color-text-muted: #a8a29e;
+  --color-text-inverse: #fafaf9;
+
+  --color-border: #e7e0d6;
+  --color-border-strong: #d6cfc4;
+
+  --color-success: #15803d;
+  --color-warning: #c2410c;
+  --color-danger: #dc2626;
+  --color-info: #1d4ed8;
+
+  --status-recibido: #2563eb;
+  --status-recibido-bg: color-mix(in srgb, var(--status-recibido) 14%, var(--color-surface));
+  --status-preparando: #d97706;
+  --status-preparando-bg: color-mix(in srgb, var(--status-preparando) 16%, var(--color-surface));
+  --status-enviado: #7c3aed;
+  --status-enviado-bg: color-mix(in srgb, var(--status-enviado) 14%, var(--color-surface));
+  --status-entregado: #059669;
+  --status-entregado-bg: color-mix(in srgb, var(--status-entregado) 14%, var(--color-surface));
+
+  --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.05);
+  --shadow-md: 0 8px 24px rgba(28, 25, 23, 0.08);
+  --shadow-lg: 0 20px 50px rgba(28, 25, 23, 0.14);
+  --overlay: rgba(28, 25, 23, 0.45);
+}
+
+[data-mode='dark'] {
+  --color-primary-soft: color-mix(in srgb, var(--color-primary) 18%, var(--color-surface));
+  --color-primary-fg: #fff;
+
+  --color-bg: #0f0d0b;
+  --color-surface: #1a1714;
+  --color-surface-2: #221e1a;
+  --color-sidebar: #0b0a09;
+  --color-sidebar-text: #f5f5f4;
+  --color-sidebar-muted: #a8a29e;
+  --color-sidebar-hover: color-mix(in srgb, #fff 6%, transparent);
+  --color-sidebar-active: color-mix(in srgb, var(--color-primary) 28%, transparent);
+
+  --color-text: #f5f2ed;
+  --color-text-secondary: #d6d3d1;
+  --color-text-muted: #a8a29e;
+  --color-text-inverse: #1c1917;
+
+  --color-border: #2e2924;
+  --color-border-strong: #44403c;
+
+  --color-success: #34d399;
+  --color-warning: #fb923c;
+  --color-danger: #f87171;
+  --color-info: #60a5fa;
+
+  --status-recibido: #60a5fa;
+  --status-preparando: #fbbf24;
+  --status-enviado: #c4b5fd;
+  --status-entregado: #34d399;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --sidebar-width: 260px;
+  --header-height: 68px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+  --control-height: 44px;
+  --transition: 160ms ease;
+}

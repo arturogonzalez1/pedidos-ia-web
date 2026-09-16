@@ -1,0 +1,165 @@
+.page {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+}
+
+.brand {
+  background: var(--color-sidebar);
+  color: var(--color-sidebar-text);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 64px;
+}
+
+.brand::before,
+.brand::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-primary) 55%, transparent);
+  filter: blur(8px);
+}
+
+.brand::before {
+  width: 320px;
+  height: 320px;
+  right: -80px;
+  top: -60px;
+  opacity: 0.55;
+}
+
+.brand::after {
+  width: 240px;
+  height: 240px;
+  left: -70px;
+  bottom: 40px;
+  opacity: 0.28;
+}
+
+.brandInner {
+  position: relative;
+  z-index: 1;
+  max-width: 460px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 36px;
+}
+
+.logo svg {
+  background: var(--color-primary);
+  color: var(--color-primary-fg);
+  padding: 6px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+}
+
+.brand h1 {
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  margin-bottom: 16px;
+}
+
+.brand p {
+  color: var(--color-sidebar-muted);
+  font-size: 1.05rem;
+  max-width: 38ch;
+}
+
+.brand ul {
+  margin-top: 36px;
+  display: grid;
+  gap: 12px;
+}
+
+.brand li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-sidebar-text);
+  font-weight: 500;
+}
+
+.brand li svg {
+  color: var(--color-primary);
+}
+
+.panel {
+  display: grid;
+  place-items: center;
+  padding: 32px 24px;
+  background:
+    radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--color-primary) 14%, transparent), transparent 40%),
+    var(--color-bg);
+}
+
+.card {
+  width: min(420px, 100%);
+}
+
+.kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.card h2 {
+  font-size: 1.7rem;
+  letter-spacing: -0.03em;
+}
+
+.lead {
+  color: var(--color-text-secondary);
+  margin: 8px 0 28px;
+}
+
+.demo {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.mobileBrand {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .mobileBrand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    margin-bottom: 28px;
+  }
+
+  .mobileBrand svg {
+    background: var(--color-primary);
+    color: var(--color-primary-fg);
+    padding: 6px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+}

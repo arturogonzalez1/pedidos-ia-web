@@ -9,6 +9,7 @@ const NEW_HIGHLIGHT_MS = 8000
 export function useOrders() {
   const { notify } = useToast()
   const [orders, setOrders] = useState([])
+  const [sucursal, setSucursal] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [updatingId, setUpdatingId] = useState(null)
@@ -37,7 +38,8 @@ export function useOrders() {
   const refresh = useCallback(async () => {
     setLoading(true)
     try {
-      const data = await ordersService.list()
+      const { sucursal: nextSucursal, orders: data } = await ordersService.list()
+      setSucursal(nextSucursal)
       setOrders((current) => {
         const incomingIds = new Set(data.map((order) => String(order.id)))
         const extras = current.filter((order) => !incomingIds.has(String(order.id)))
@@ -90,5 +92,5 @@ export function useOrders() {
     setUpdatingId(null)
   }, [])
 
-  return { orders, loading, error, updatingId, updateStatus, refresh, hubState }
+  return { orders, sucursal, loading, error, updatingId, updateStatus, refresh, hubState }
 }

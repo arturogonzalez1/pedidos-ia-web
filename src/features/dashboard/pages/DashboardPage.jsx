@@ -18,7 +18,7 @@ function hubLabel(hubState) {
 export function DashboardPage() {
   const { user } = useAuth()
   const { notify } = useToast()
-  const { orders, loading, error, updatingId, updateStatus, hubState } = useOrders()
+  const { orders, sucursal, loading, error, updatingId, updateStatus, hubState } = useOrders()
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('all')
 
@@ -60,7 +60,9 @@ export function DashboardPage() {
       <div className={styles.intro}>
         <div>
           <h2>Hola, {user?.name?.split(' ')[0]}</h2>
-          <p>Pedidos de la sucursal Centro y estatus de cocina en un solo lugar.</p>
+          <p>
+            Pedidos de {sucursal?.nombre || 'tu sucursal'} y estatus de cocina en un solo lugar.
+          </p>
         </div>
         <span className={styles.live} data-state={hubState}>
           <span className={styles.liveDot} />

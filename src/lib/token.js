@@ -76,6 +76,7 @@ export function mapAuthUser(dto) {
     displayName: dto.displayName || name,
     role: roles[0] || '',
     roles,
+    sucursalId: Number(dto.sucursalId) || 0,
   }
 }
 

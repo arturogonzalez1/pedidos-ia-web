@@ -49,7 +49,7 @@ export function LoginForm() {
         label="Usuario"
         type="text"
         autoComplete="username"
-        placeholder="admin"
+        placeholder="operador"
         value={userName}
         onChange={(event) => setUserName(event.target.value)}
         error={errors.userName}

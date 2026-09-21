@@ -26,7 +26,7 @@ export function usePedidosHub(onPedidoCreado) {
 
     async function joinSucursal() {
       if (connection.state !== HubConnectionState.Connected) return
-      await connection.invoke('JoinSucursal', APP_CONFIG.sucursalId)
+      await connection.invoke('JoinSucursal')
     }
 
     connection.on('pedidoCreado', (pedido) => {

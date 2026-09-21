@@ -61,7 +61,7 @@ Cada módulo de `features/` agrupa `pages`, `components`, `services`, `hooks` y 
 ## Autenticación
 
 1. `POST /api/auth/login` con `{ userName, password }` devuelve `{ accessToken, tokenType, expiresAt, user }`.
-2. El JWT se guarda y se envía en cada petición como `Authorization: Bearer …`. `GET /api/pedidos` toma la sucursal del token.
+2. El JWT se guarda y se envía en cada petición como `Authorization: Bearer …`. `GET /api/pedidos` y el hub `/hubs/pedidos` toman la sucursal del token.
 3. Al recargar, se restaura la sesión si el token sigue vigente (`expiresAt` y claim `exp`).
 4. Si el token expira o la API responde 401, la sesión se limpia y `ProtectedRoute` redirige a `/login`.
 

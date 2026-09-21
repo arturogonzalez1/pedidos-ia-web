@@ -24,7 +24,7 @@ export function usePedidosHub(onPedidoCreado) {
 
     let stopped = false
 
-    async function joinSucursal() {
+    async function joinFromToken() {
       if (connection.state !== HubConnectionState.Connected) return
       await connection.invoke('JoinSucursal')
     }
@@ -40,7 +40,7 @@ export function usePedidosHub(onPedidoCreado) {
     connection.onreconnected(() => {
       if (stopped) return
       setState('connected')
-      joinSucursal().catch(() => undefined)
+      joinFromToken().catch(() => undefined)
     })
 
     connection.onclose(() => {
@@ -56,7 +56,7 @@ export function usePedidosHub(onPedidoCreado) {
             return
           }
           setState('connected')
-          await joinSucursal()
+          await joinFromToken().catch(() => undefined)
           return
         } catch {
           if (stopped) return

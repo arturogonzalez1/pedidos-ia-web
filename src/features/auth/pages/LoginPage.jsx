@@ -42,7 +42,7 @@ export function LoginPage() {
           <p className={styles.lead}>Usa tu cuenta de personal. No hay registro público.</p>
           <LoginForm />
           <p className={styles.demo}>
-            Demo: <strong>{DEMO_CREDENTIALS.email}</strong> / {DEMO_CREDENTIALS.password}
+            Demo: <strong>{DEMO_CREDENTIALS.userName}</strong> / {DEMO_CREDENTIALS.password}
           </p>
         </div>
       </section>

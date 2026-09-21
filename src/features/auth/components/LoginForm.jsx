@@ -5,13 +5,11 @@ import { DEMO_CREDENTIALS } from '@/config/app'
 import { useAuth } from '@/features/auth/context/AuthContext'
 import styles from './LoginForm.module.css'
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
 export function LoginForm() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const [email, setEmail] = useState(DEMO_CREDENTIALS.email)
+  const [userName, setUserName] = useState(DEMO_CREDENTIALS.userName)
   const [password, setPassword] = useState(DEMO_CREDENTIALS.password)
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
@@ -20,8 +18,7 @@ export function LoginForm() {
 
   function validate() {
     const next = {}
-    if (!email.trim()) next.email = 'El correo es obligatorio'
-    else if (!EMAIL_RE.test(email.trim())) next.email = 'Correo no válido'
+    if (!userName.trim()) next.userName = 'El usuario es obligatorio'
     if (!password) next.password = 'La contraseña es obligatoria'
     else if (password.length < 6) next.password = 'Mínimo 6 caracteres'
     setErrors(next)
@@ -35,7 +32,7 @@ export function LoginForm() {
 
     setLoading(true)
     try {
-      await login(email.trim(), password)
+      await login(userName.trim(), password)
       const to = location.state?.from?.pathname || '/dashboard'
       navigate(to, { replace: true })
     } catch (error) {
@@ -48,15 +45,15 @@ export function LoginForm() {
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <Input
-        id="email"
-        label="Correo"
-        type="email"
+        id="userName"
+        label="Usuario"
+        type="text"
         autoComplete="username"
-        placeholder="tu@restaurante.com"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        error={errors.email}
-        icon={<Icon name="mail" size={16} />}
+        placeholder="admin"
+        value={userName}
+        onChange={(event) => setUserName(event.target.value)}
+        error={errors.userName}
+        icon={<Icon name="user" size={16} />}
       />
       <Input
         id="password"

@@ -1,68 +1,66 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { parseBearerToken } from '@/lib/token'
 import { authService } from '@/features/auth/services/authService'
+import { getTokenExpiryMs, isTokenValid } from '@/lib/token'
 
 const AuthContext = createContext(null)
 
+function readInitialSession() {
+  const stored = authService.getStoredSession()
+  if (stored.token && stored.user) return stored
+  authService.clearSession()
+  return { token: null, user: null, expiresAt: null }
+}
+
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
-  const [isBootstrapping, setIsBootstrapping] = useState(true)
+  const [session, setSession] = useState(readInitialSession)
+  const { user, token, expiresAt } = session
 
   const clearSession = useCallback(() => {
-    setUser(null)
-    setToken(null)
+    authService.clearSession()
+    setSession({ token: null, user: null, expiresAt: null })
   }, [])
-
-  useEffect(() => {
-    let cancelled = false
-
-    async function bootstrap() {
-      const stored = authService.getStoredSession()
-      const payload = parseBearerToken(stored.token)
-
-      if (!payload || !stored.token) {
-        if (!cancelled) setIsBootstrapping(false)
-        return
-      }
-
-      try {
-        const data = await authService.me()
-        if (!cancelled) {
-          setToken(stored.token)
-          setUser(data.user)
-        }
-      } catch {
-        await authService.logout().catch(() => undefined)
-        if (!cancelled) clearSession()
-      } finally {
-        if (!cancelled) setIsBootstrapping(false)
-      }
-    }
-
-    bootstrap()
-    return () => {
-      cancelled = true
-    }
-  }, [clearSession])
 
   useEffect(() => {
     function onUnauthorized() {
-      clearSession()
+      setSession({ token: null, user: null, expiresAt: null })
     }
     window.addEventListener('auth:unauthorized', onUnauthorized)
     return () => window.removeEventListener('auth:unauthorized', onUnauthorized)
-  }, [clearSession])
+  }, [])
 
-  const login = useCallback(async (email, password) => {
-    const data = await authService.login(email, password)
-    setToken(data.token)
-    setUser(data.user)
+  useEffect(() => {
+    if (!token) return undefined
+
+    const expiry = getTokenExpiryMs(token, expiresAt)
+    const delay = expiry ? Math.max(expiry - Date.now(), 0) : 0
+    const timer = window.setTimeout(() => {
+      clearSession()
+    }, delay)
+
+    function onVisible() {
+      if (document.visibilityState === 'visible' && !isTokenValid(token, expiresAt)) {
+        clearSession()
+      }
+    }
+
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      window.clearTimeout(timer)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [token, expiresAt, clearSession])
+
+  const login = useCallback(async (userName, password) => {
+    const data = await authService.login(userName, password)
+    setSession({
+      token: data.token,
+      user: data.user,
+      expiresAt: data.expiresAt,
+    })
     return data
   }, [])
 
-  const logout = useCallback(async () => {
-    await authService.logout()
+  const logout = useCallback(() => {
     clearSession()
   }, [clearSession])
 
@@ -70,12 +68,13 @@ export function AuthProvider({ children }) {
     () => ({
       user,
       token,
-      isAuthenticated: Boolean(user && token),
-      isBootstrapping,
+      expiresAt,
+      isAuthenticated: Boolean(user && token && isTokenValid(token, expiresAt)),
+      isBootstrapping: false,
       login,
       logout,
     }),
-    [user, token, isBootstrapping, login, logout],
+    [user, token, expiresAt, login, logout],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

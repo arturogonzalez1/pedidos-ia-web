@@ -11,6 +11,7 @@ export const APP_CONFIG = {
 export const STORAGE_KEYS = {
   token: 'auth.token',
   user: 'auth.user',
+  expiresAt: 'auth.expiresAt',
   orders: 'orders',
   theme: 'theme',
 }
@@ -18,6 +19,6 @@ export const STORAGE_KEYS = {
 export const TOKEN_TTL_MS = 8 * 60 * 60 * 1000
 
 export const DEMO_CREDENTIALS = {
-  email: 'admin@pedidos.com',
-  password: 'admin123',
+  userName: 'admin',
+  password: 'Admin123!',
 }

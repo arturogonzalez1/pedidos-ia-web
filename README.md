@@ -13,8 +13,8 @@ Abre [http://localhost:5173](http://localhost:5173).
 
 | Campo | Valor |
 | --- | --- |
-| Correo | `admin@pedidos.com` |
-| Contraseña | `admin123` |
+| Usuario | `admin` |
+| Contraseña | `Admin123!` |
 
 No hay registro ni recuperación de contraseña: el acceso es solo para personal.
 
@@ -22,7 +22,7 @@ No hay registro ni recuperación de contraseña: el acceso es solo para personal
 
 - Login único con validación y sesión persistida
 - Rutas protegidas: sin token válido se redirige a `/login`
-- API simulada que exige `Authorization: Bearer <token>`
+- API real con JWT Bearer (`Authorization: Bearer <token>`)
 - Dashboard con KPIs del turno
 - Tabla de pedidos (mesa, delivery y para llevar)
 - Cambio de estatus en un clic: **Recibido → Preparando → Enviado → Entregado**
@@ -60,12 +60,10 @@ Cada módulo de `features/` agrupa `pages`, `components`, `services`, `hooks` y 
 
 ## Autenticación
 
-1. `POST /auth/login` devuelve `{ token, user }`.
-2. El token se guarda y se envía en cada petición como `Authorization: Bearer …`.
-3. Al recargar, se llama `GET /auth/me`. Si el token es inválido o expiró (8 h), la sesión se limpia.
-4. `ProtectedRoute` cubre el dashboard; `GuestRoute` evita ver el login si ya hay sesión.
-
-El backend es un mock en `src/lib/mockBackend.js`. Sustitúyelo por un `fetch` real en `src/lib/api.js` cuando exista API.
+1. `POST /api/auth/login` con `{ userName, password }` devuelve `{ accessToken, tokenType, expiresAt, user }`.
+2. El JWT se guarda y se envía en cada petición como `Authorization: Bearer …`.
+3. Al recargar, se restaura la sesión si el token sigue vigente (`expiresAt` y claim `exp`).
+4. Si el token expira o la API responde 401, la sesión se limpia y `ProtectedRoute` redirige a `/login`.
 
 ## Pedidos demo
 

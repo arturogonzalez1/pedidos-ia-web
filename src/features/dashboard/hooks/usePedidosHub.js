@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { HubConnectionBuilder, HubConnectionState, LogLevel } from '@microsoft/signalr'
 import { APP_CONFIG } from '@/config/app'
+import { getAccessToken } from '@/lib/backend'
 
 const RETRY_MS = 4000
 
@@ -14,7 +15,9 @@ export function usePedidosHub(onPedidoCreado) {
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl(APP_CONFIG.hubUrl)
+      .withUrl(APP_CONFIG.hubUrl, {
+        accessTokenFactory: () => getAccessToken() || '',
+      })
       .withAutomaticReconnect()
       .configureLogging(LogLevel.Warning)
       .build()
